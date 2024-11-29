@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NATO Alphabet Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>NATO Alphabet Converter</h1>
+    <label for="inputText">Enter a string:</label><br>
+    <input type="text" id="inputText" placeholder="Type here..."><br>
+    <button onclick="convertToNATO()">Convert</button>
+    <div id="output"></div>
+
+    <script>
+        const natoAlphabet = {
+            A: "Alpha", B: "Bravo", C: "Charlie", D: "Delta", E: "Echo",
+            F: "Foxtrot", G: "Golf", H: "Hotel", I: "India", J: "Juliett",
+            K: "Kilo", L: "Lima", M: "Mike", N: "November", O: "Oscar",
+            P: "Papa", Q: "Quebec", R: "Romeo", S: "Sierra", T: "Tango",
+            U: "Uniform", V: "Victor", W: "Whiskey", X: "X-ray", Y: "Yankee", Z: "Zulu"
+        };
+
+        function convertToNATO() {
+            const inputText = document.getElementById("inputText").value.toUpperCase();
+            let result = "";
+
+            for (let char of inputText) {
+                if (natoAlphabet[char]) {
+                    result += natoAlphabet[char] + " ";
+                } else if (char.match(/[0-9]/)) {
+                    result += char + " "; // Pass numbers through as they are
+                } else if (char === " ") {
+                    result += "/ "; // Represent spaces as slashes
+                } else {
+                    result += char + " "; // Pass non-alphabetic characters
+                }
+            }
+
+            document.getElementById("output").textContent = result.trim();
+        }
+    </script>
+</body>
+</html>
