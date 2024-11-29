@@ -23,6 +23,10 @@
             border: 1px solid #ccc;
             background-color: #f9f9f9;
         }
+        #warning {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -31,6 +35,7 @@
     <input type="text" id="inputText" placeholder="Type here..."><br>
     <button onclick="convertToNATO()">Convert</button>
     <div id="output"></div>
+    <p id="warning"></p>
 
     <script>
         const natoAlphabet = {
@@ -41,23 +46,69 @@
             U: "Uniform", V: "Victor", W: "Whiskey", X: "X-ray", Y: "Yankee", Z: "Zulu"
         };
 
+        const specialCharacters = {
+            "!": "Exclamation Mark",
+            "@": "At Symbol",
+            "#": "Hash",
+            "$": "Dollar Sign",
+            "%": "Percent",
+            "^": "Caret",
+            "&": "Ampersand",
+            "*": "Asterisk",
+            "(": "Left Parenthesis",
+            ")": "Right Parenthesis",
+            "-": "Dash",
+            "_": "Underscore",
+            "+": "Plus",
+            "=": "Equals",
+            "[": "Left Bracket",
+            "]": "Right Bracket",
+            "{": "Left Brace",
+            "}": "Right Brace",
+            "|": "Vertical Bar",
+            "\\": "Backslash",
+            ":": "Colon",
+            ";": "Semicolon",
+            "'": "Apostrophe",
+            "\"": "Quotation Mark",
+            "<": "Less Than",
+            ">": "Greater Than",
+            ",": "Comma",
+            ".": "Period",
+            "?": "Question Mark",
+            "/": "Slash",
+            "`": "Backtick",
+            "~": "Tilde"
+        };
+
         function convertToNATO() {
             const inputText = document.getElementById("inputText").value.toUpperCase();
             let result = "";
+            let hasInvalidCharacters = false;
 
             for (let char of inputText) {
                 if (natoAlphabet[char]) {
                     result += natoAlphabet[char] + " ";
                 } else if (char.match(/[0-9]/)) {
                     result += char + " "; // Pass numbers through as they are
+                } else if (specialCharacters[char]) {
+                    result += specialCharacters[char] + " "; // Spell out special characters
                 } else if (char === " ") {
                     result += "/ "; // Represent spaces as slashes
                 } else {
-                    result += char + " "; // Pass non-alphabetic characters
+                    result += char + " "; // Include the character
+                    hasInvalidCharacters = true; // Mark as invalid
                 }
             }
 
             document.getElementById("output").textContent = result.trim();
+
+            if (hasInvalidCharacters) {
+                document.getElementById("warning").textContent = 
+                    "Warning: Some characters are not part of the NATO alphabet, numbers, or printable symbols.";
+            } else {
+                document.getElementById("warning").textContent = "";
+            }
         }
     </script>
 </body>
