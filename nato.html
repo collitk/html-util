@@ -89,14 +89,16 @@
             for (let char of inputText) {
                 if (natoAlphabet[char]) {
                     result += natoAlphabet[char] + " ";
-                } else if (char.match(/[0-9]/)) {
-                    result += char + " "; // Pass numbers through as they are
+                } else if (char.match(/[0-8]/)) {
+                    result += char + " "; // Pass numbers 0-8 as they are
+                } else if (char === "9") {
+                    result += "Niner "; // Convert 9 to Niner
                 } else if (specialCharacters[char]) {
                     result += specialCharacters[char] + " "; // Spell out special characters
                 } else if (char === " ") {
                     result += "/ "; // Represent spaces as slashes
                 } else {
-                    result += char + " "; // Include the character
+                    result += char + " "; // Include unsupported characters
                     hasInvalidCharacters = true; // Mark as invalid
                 }
             }
@@ -110,6 +112,13 @@
                 document.getElementById("warning").textContent = "";
             }
         }
+
+        // Add event listener for Enter key
+        document.getElementById("inputText").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                convertToNATO();
+            }
+        });
     </script>
 </body>
 </html>
